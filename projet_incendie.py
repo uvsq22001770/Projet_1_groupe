@@ -1,3 +1,14 @@
+#########################################
+# groupe LDDMP 3
+# Ismaël RAIS
+# Ines ROSENTHAL
+# Hajar ASBAI
+# Adrien HANNA
+# Quentin ASSIE
+# Paula POP
+# https://github.com/uvsq22001770/projet_incendie.git
+#########################################
+
 import tkinter as tk
 import random
 HAUTEUR = 700
@@ -23,9 +34,10 @@ def couleur():
         return "green"       
 
 
+
 for i in range(0, 10):
     for j in range(0, 8):
-        canvas.create_rectangle((i*100, j*100), (i*100 + 100, j*100 - 100), fill= couleur())
+        str(i)+str(j) = canvas.create_rectangle((i*100, j*100), (i*100 + 100, j*100 - 100), fill= couleur())
 
 
 """canvas_eau.grid(column=, row=)
