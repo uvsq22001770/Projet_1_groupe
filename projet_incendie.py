@@ -24,6 +24,9 @@ LARGEUR = 1000
 #########################################
 # définition des variables globales
 
+tuiles = []
+chara = []
+
 #########################################
 # définition des fonctions
 # docstring pour chaque fonction
@@ -32,15 +35,39 @@ def clic(event):
     """Transforme les parcelles de prairie ou de forêt en parcelles enflamées"""
     pass
 
-def couleur():
+def couleur_aleatoire():
+    """fonction donnant une couleur aléatoire lors de la création du terrain (couleurs possibles = bleu, vert, jaune)"""
     x = rd.randint(0,2)
+    global couleur
+
     if x == 0:
-        return "blue"
+        couleur = "blue"
+        return couleur
     elif x == 1:
-        return "yellow"
+        couleur = "yellow"
+        return couleur
     elif x == 2:
-        return "green"
+        couleur = "green"
+        return couleur
+
+
+def generer_terrain():
+    """ fonction génerant le terrain du debut de jeu et faisant entrer chaque tuile dans la liste "tuiles", les coordonnées(i;j) des triangles sont definies par tuiles[i][j]"""
+    global tuiles
+    global chara
     
+    for i in range(0, 10):
+        liste1 = []
+        tuiles.append(liste1)
+
+        liste2 = []
+        chara.append(liste2)
+        for j in range(0, 7):
+            tuiles[i].append(TERRAIN.create_rectangle((i*100, j*100), (i*100 + 100, j*100 + 100), fill= couleur_aleatoire()))
+            chara[i].append(((i,j), couleur, 0))   
+      
+
+
 def sauver_terrain():
     pass
     
@@ -72,23 +99,19 @@ racine=tk.Tk()
 
 TERRAIN = tk.Canvas(racine, bg="white", height=HAUTEUR, width=LARGEUR)
 
-### CODE POUR CREER LE QUADRILLAGE ###
-for i in range(0, 10):
-    for j in range(0, 8):
-        TERRAIN.create_rectangle((i*100, j*100), (i*100 + 100, j*100 - 100), fill= couleur())
 
 #########################################
 # définition des widgets
 
-canvas_eau=tk.Canvas(racine, bg="blue", height=100, width=100)
-canvas_foret=tk.Canvas(racine, bg="green", height=100, width=100)
-canvas_cendres=tk.Canvas(racine, bg="black", height=100, width=100)
-canvas_feu=tk.Canvas(racine, bg="red", height=100, width=100)
-canvas_prairie=tk.Canvas(racine, bg="yellow", height=100, width=100)
-canvas_cendrestiedes=tk.Canvas(racine, bg="grey", height=100, width=100)
+#canvas_eau=tk.Canvas(racine, bg="blue", height=100, width=100)
+#canvas_foret=tk.Canvas(racine, bg="green", height=100, width=100)
+#canvas_cendres=tk.Canvas(racine, bg="black", height=100, width=100)
+#canvas_feu=tk.Canvas(racine, bg="red", height=100, width=100)
+#canvas_prairie=tk.Canvas(racine, bg="yellow", height=100, width=100)
+#canvas_cendrestiedes=tk.Canvas(racine, bg="grey", height=100, width=100)
 
 
-GENERER_TERRAIN=tk.Button(racine,text="génerer terrain",font=("helvetica"),command=couleur)
+GENERER_TERRAIN=tk.Button(racine,text="génerer terrain",font=("helvetica"),command=generer_terrain)
 SAUV_TERRAIN=tk.Button(racine,text="sauvegarder terrain",font=("helvetica"),command=sauver_terrain)
 CHAR_TERRAIN=tk.Button(racine,text="charger un terrain",font=("helvetica"),command=char_terrain)
 EFF_ETAPE=tk.Button(racine,text="effectuer une étape",font=("helvetica"),command=effect_étape)
@@ -96,13 +119,13 @@ DEM_SIMU=tk.Button(racine,text="demarrer simulation",font=("helvetica"),command=
 STOP_SIMU=tk.Button(racine,text="stopper la simulation",font=("helvetica"),command=stop_simulation)
 
 
-GENERER_TERRAIN.grid(column=0,row=0)
-SAUV_TERRAIN.grid(column=0,row=1)
-CHAR_TERRAIN.grid(column=0,row=2)
-TERRAIN.grid(column=1,row=0, rowspan=3)
-EFF_ETAPE.grid(column=2,row=0)
-DEM_SIMU.grid(column=2,row=1)
-STOP_SIMU.grid(column=2,row=2)
+GENERER_TERRAIN.grid(column = 0,row = 0)
+SAUV_TERRAIN.grid(column = 0,row = 1)
+CHAR_TERRAIN.grid(column = 0,row = 2)
+TERRAIN.grid(column=1,row = 0, rowspan = 3)
+EFF_ETAPE.grid(column = 2,row = 0)
+DEM_SIMU.grid(column = 2,row = 1)
+STOP_SIMU.grid(column = 2,row = 2)
 
 #########################################
 # définition des évènements
