@@ -7,7 +7,11 @@
 # Quentin ASSIE
 # Paula POP
 # https://github.com/uvsq22001770/projet_incendie.git
+
+''' https://github.com/coucheney/jeudi_jeu_de_la_vie '''
 #########################################
+
+
 
 #########################################
 # import des librairies
@@ -34,6 +38,29 @@ chara = []
 def clic(event):
     """Transforme les parcelles de prairie ou de forêt en parcelles enflamées"""
     pass
+
+def retourner_couleur(i,j):
+    """ fonction prenant comme argument les coordonnées d'un objet et renvoie sa couleur"""
+
+    if "blue" in(chara[i][j]):
+        return "blue"
+
+    elif "yellow" in(chara[i][j]):
+        return "yellow"
+
+    elif "green" in(chara[i][j]):
+        return "green"  
+
+    elif "black" in(chara[i][j]):
+        return "black" 
+
+     elif "grey" in(chara[i][j]):
+        return "grey"
+
+    elif "red" in(chara[i][j]):
+        return "red"          
+
+    
 
 def couleur_aleatoire():
     """fonction donnant une couleur aléatoire lors de la création du terrain (couleurs possibles = bleu, vert, jaune)"""
@@ -64,8 +91,8 @@ def generer_terrain():
         chara.append(liste2)
         for j in range(0, 7):
             tuiles[i].append(TERRAIN.create_rectangle((i*100, j*100), (i*100 + 100, j*100 + 100), fill= couleur_aleatoire()))
-            chara[i].append(((i,j), couleur, 0))   
-      
+            chara[i].append(((i,j), couleur, 0))
+
 
 
 def sauver_terrain():
