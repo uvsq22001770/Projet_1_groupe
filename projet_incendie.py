@@ -18,8 +18,8 @@ import random as rd
 #########################################
 # définition des constantes
 
-HAUTEUR = 700
-LARGEUR = 1000
+HAUTEUR = 540
+LARGEUR = 1200
 
 #########################################
 # définition des variables globales
@@ -56,14 +56,14 @@ def generer_terrain():
     global tuiles
     global chara
     
-    for i in range(0, 10):
+    for i in range(0, 40):
         liste1 = []
         tuiles.append(liste1)
 
         liste2 = []
         chara.append(liste2)
-        for j in range(0, 7):
-            tuiles[i].append(TERRAIN.create_rectangle((i*100, j*100), (i*100 + 100, j*100 + 100), fill= couleur_aleatoire()))
+        for j in range(0, 18):
+            tuiles[i].append(TERRAIN.create_rectangle((i*30, j*30), (i*30 + 30, j*30 + 30), fill= couleur_aleatoire()))
             chara[i].append(((i,j), couleur, 0))   
       
 
@@ -119,13 +119,13 @@ DEM_SIMU=tk.Button(racine,text="demarrer simulation",font=("helvetica"),command=
 STOP_SIMU=tk.Button(racine,text="stopper la simulation",font=("helvetica"),command=stop_simulation)
 
 
+TERRAIN.grid(column= 0,row = 2, columnspan = 3)
 GENERER_TERRAIN.grid(column = 0,row = 0)
-SAUV_TERRAIN.grid(column = 0,row = 1)
-CHAR_TERRAIN.grid(column = 0,row = 2)
-TERRAIN.grid(column=1,row = 0, rowspan = 3)
-EFF_ETAPE.grid(column = 2,row = 0)
-DEM_SIMU.grid(column = 2,row = 1)
-STOP_SIMU.grid(column = 2,row = 2)
+SAUV_TERRAIN.grid(column = 1,row = 0)
+CHAR_TERRAIN.grid(column = 2,row = 0)
+EFF_ETAPE.grid(column = 0,row = 1)
+DEM_SIMU.grid(column = 1,row = 1)
+STOP_SIMU.grid(column = 2,row = 1)
 
 #########################################
 # définition des évènements
