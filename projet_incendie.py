@@ -7,11 +7,7 @@
 # Quentin ASSIE
 # Paula POP
 # https://github.com/uvsq22001770/projet_incendie.git
-
-''' https://github.com/coucheney/jeudi_jeu_de_la_vie '''
 #########################################
-
-
 
 #########################################
 # import des librairies
@@ -22,8 +18,8 @@ import random as rd
 #########################################
 # définition des constantes
 
-HAUTEUR = 700
-LARGEUR = 1000
+HAUTEUR = 540
+LARGEUR = 1200
 
 #########################################
 # définition des variables globales
@@ -54,13 +50,11 @@ def retourner_couleur(i,j):
     elif "black" in(chara[i][j]):
         return "black" 
 
-     elif "grey" in(chara[i][j]):
+    elif "grey" in(chara[i][j]) :
         return "grey"
 
     elif "red" in(chara[i][j]):
-        return "red"          
-
-    
+        return "red" 
 
 def couleur_aleatoire():
     """fonction donnant une couleur aléatoire lors de la création du terrain (couleurs possibles = bleu, vert, jaune)"""
@@ -83,16 +77,16 @@ def generer_terrain():
     global tuiles
     global chara
     
-    for i in range(0, 10):
+    for i in range(0, 40):
         liste1 = []
         tuiles.append(liste1)
 
         liste2 = []
         chara.append(liste2)
-        for j in range(0, 7):
-            tuiles[i].append(TERRAIN.create_rectangle((i*100, j*100), (i*100 + 100, j*100 + 100), fill= couleur_aleatoire()))
-            chara[i].append(((i,j), couleur, 0))
-
+        for j in range(0, 18):
+            tuiles[i].append(TERRAIN.create_rectangle((i*30, j*30), (i*30 + 30, j*30 + 30), fill= couleur_aleatoire()))
+            chara[i].append(((i,j), couleur, 0))   
+      
 
 
 def sauver_terrain():
@@ -146,13 +140,13 @@ DEM_SIMU=tk.Button(racine,text="demarrer simulation",font=("helvetica"),command=
 STOP_SIMU=tk.Button(racine,text="stopper la simulation",font=("helvetica"),command=stop_simulation)
 
 
+TERRAIN.grid(column= 0,row = 2, columnspan = 3)
 GENERER_TERRAIN.grid(column = 0,row = 0)
-SAUV_TERRAIN.grid(column = 0,row = 1)
-CHAR_TERRAIN.grid(column = 0,row = 2)
-TERRAIN.grid(column=1,row = 0, rowspan = 3)
-EFF_ETAPE.grid(column = 2,row = 0)
-DEM_SIMU.grid(column = 2,row = 1)
-STOP_SIMU.grid(column = 2,row = 2)
+SAUV_TERRAIN.grid(column = 1,row = 0)
+CHAR_TERRAIN.grid(column = 2,row = 0)
+EFF_ETAPE.grid(column = 0,row = 1)
+DEM_SIMU.grid(column = 1,row = 1)
+STOP_SIMU.grid(column = 2,row = 1)
 
 #########################################
 # définition des évènements
