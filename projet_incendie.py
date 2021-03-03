@@ -31,30 +31,35 @@ chara = []
 # définition des fonctions
 # docstring pour chaque fonction
 
-def clic(event):
-    """Transforme les parcelles de prairie ou de forêt en parcelles enflamées"""
-    pass
 
 def retourner_couleur(i,j):
     """ fonction prenant comme argument les coordonnées d'un objet et renvoie sa couleur"""
 
-    if "blue" in(chara[i][j]):
+    if "blue" in (chara[i][j]):
         return "blue"
 
-    elif "yellow" in(chara[i][j]):
+    elif "yellow" in (chara[i][j]):
         return "yellow"
 
-    elif "green" in(chara[i][j]):
+    elif "green" in (chara[i][j]):
         return "green"  
 
-    elif "black" in(chara[i][j]):
+    elif "black" in (chara[i][j]):
         return "black" 
 
-    elif "grey" in(chara[i][j]) :
+    elif "grey" in (chara[i][j]) :
         return "grey"
 
-    elif "red" in(chara[i][j]):
+    elif "red" in (chara[i][j]):
         return "red" 
+
+def clic(event):
+    """Reprend les coordonnées de la parcelle sur laquelle on a cliqué en premier"""
+
+    i = (int(event.x / 30))
+    j = (int(event.y / 30))
+    print(chara[i][j])
+
 
 def couleur_aleatoire():
     """fonction donnant une couleur aléatoire lors de la création du terrain (couleurs possibles = bleu, vert, jaune)"""
@@ -110,9 +115,6 @@ def acceleration():
 def ralentissement():
     pass
 
-def demarrer_feu():
-    pass
-
 #########################################
 # programme principal
 
@@ -153,6 +155,6 @@ STOP_SIMU.grid(column = 2,row = 1)
 
 racine.bind("<KeyPress-a>", acceleration)
 racine.bind("<KeyPress-r>", ralentissement)
-racine.bind("<Button-1>", demarrer_feu)
+racine.bind("<Button-1>", clic)
 
 racine.mainloop()
