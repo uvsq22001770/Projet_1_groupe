@@ -35,13 +35,13 @@ chara = []
 def retourner_couleur(i,j):
     """ fonction prenant comme argument les coordonnées d'un objet et renvoie sa couleur"""
 
-    if "blue" in (chara[i][j]):
+    if "#02079c" in (chara[i][j]):
         return "blue"
 
-    elif "yellow" in (chara[i][j]):
+    elif "#ff9d00" in (chara[i][j]):
         return "yellow"
 
-    elif "green" in (chara[i][j]):
+    elif "#056608" in (chara[i][j]):
         return "green"  
 
     elif "black" in (chara[i][j]):
@@ -62,18 +62,19 @@ def clic(event):
 
 
 def couleur_aleatoire():
-    """fonction donnant une couleur aléatoire lors de la création du terrain (couleurs possibles = bleu, vert, jaune)"""
+    """fonction donnant une couleur aléatoire lors de la création du terrain 
+    (couleurs possibles => bleu = "#02079c", vert = "#056608", jaune = "#ff9d00")"""
     x = rd.randint(0,2)
     global couleur
 
     if x == 0:
-        couleur = "blue"
+        couleur = "#02079c" #bleu
         return couleur
     elif x == 1:
-        couleur = "yellow"
+        couleur = "#ff9d00" #jaune
         return couleur
     elif x == 2:
-        couleur = "green"
+        couleur = "#056608" #vert
         return couleur
 
 
