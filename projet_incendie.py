@@ -122,6 +122,7 @@ def effect_étape():
             if "grey" in chara[i][j]:
                 passer_etape("grey")
 
+
             #feu
             if "red" in chara[i][j]:
                 passer_etape("red") 
@@ -185,8 +186,14 @@ STOP_SIMU.grid(column = 2,row = 1)
 #########################################
 # définition des évènements
 
+<<<<<<< HEAD
 TERRAIN.bind("<KeyPress-a>", acceleration)
 TERRAIN.bind("<KeyPress-r>", ralentissement)
 TERRAIN.bind("<Button-1>", clic)
+=======
+racine.bind("<KeyPress-a>", acceleration)
+racine.bind("<KeyPress-r>", ralentissement)
+racine.bind("<Button-1>", clic)
+>>>>>>> c3f5773931b2c7e67543a9c6572a4bff86176a2b
 
 racine.mainloop()
