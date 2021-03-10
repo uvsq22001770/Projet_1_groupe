@@ -27,48 +27,56 @@ LARGEUR = 1200
 tuiles = []
 chara = []
 
+etape = 0
+
 #########################################
 # définition des fonctions
 # docstring pour chaque fonction
 
-def clic(event):
-    """Transforme les parcelles de prairie ou de forêt en parcelles enflamées"""
-    pass
 
 def retourner_couleur(i,j):
     """ fonction prenant comme argument les coordonnées d'un objet et renvoie sa couleur"""
 
-    if "blue" in(chara[i][j]):
+    if "#02079c" in (chara[i][j]):
         return "blue"
 
-    elif "yellow" in(chara[i][j]):
+    elif "#ff9d00" in (chara[i][j]):
         return "yellow"
 
-    elif "green" in(chara[i][j]):
+    elif "#056608" in (chara[i][j]):
         return "green"  
 
-    elif "black" in(chara[i][j]):
+    elif "black" in (chara[i][j]):
         return "black" 
 
-    elif "grey" in(chara[i][j]) :
+    elif "grey" in (chara[i][j]) :
         return "grey"
 
-    elif "red" in(chara[i][j]):
+    elif "red" in (chara[i][j]):
         return "red" 
 
+def clic(event):
+    """Reprend les coordonnées de la parcelle sur laquelle on a cliqué en premier"""
+
+    i = (int(event.x / 30))
+    j = (int(event.y / 30))
+    print(chara[i][j])
+
+
 def couleur_aleatoire():
-    """fonction donnant une couleur aléatoire lors de la création du terrain (couleurs possibles = bleu, vert, jaune)"""
+    """fonction donnant une couleur aléatoire lors de la création du terrain 
+    (couleurs possibles => bleu = "#02079c", vert = "#056608", jaune = "#ff9d00")"""
     x = rd.randint(0,2)
     global couleur
 
     if x == 0:
-        couleur = "blue"
+        couleur = "#02079c" #bleu
         return couleur
     elif x == 1:
-        couleur = "yellow"
+        couleur = "#ff9d00" #jaune
         return couleur
     elif x == 2:
-        couleur = "green"
+        couleur = "#056608" #vert
         return couleur
 
 
@@ -95,9 +103,38 @@ def sauver_terrain():
 def char_terrain():
     pass
     
-def effect_étape():
-    pass
+
+def passer_etape(couleur):
+    """fonction qui réduit de 1 le temps dans la fonction chara"""
+    chara[i][j] = ((i,j), couleur, chara[i][j][2] - 1)
+    if chara[i][j][2] == 0 :
+        #fonction qui remplace la case
+        pass
     
+
+def effect_étape():
+    global etape 
+    etape += 1
+    for i in range(0,40):
+        for j in range(0,18):
+            
+            #cendres
+            if "grey" in chara[i][j]:
+                passer_etape("grey")
+
+            #feu
+            if "red" in chara[i][j]:
+                passer_etape("red") 
+                #fonction qui donne les voisins jaune de la case
+                #fonction qui remplace les cases jaunes
+
+            #foret
+            elif "#056608" in (chara[i][j]):
+                #fonction qui compte le nombre de voisins en feu de la case verte
+                #fonction probabilité
+                #fonction qui change la couleur de la case
+                pass
+        
 def demar_simulation():
     pass
     
@@ -108,9 +145,6 @@ def acceleration():
     pass
 
 def ralentissement():
-    pass
-
-def demarrer_feu():
     pass
 
 #########################################
@@ -151,8 +185,8 @@ STOP_SIMU.grid(column = 2,row = 1)
 #########################################
 # définition des évènements
 
-racine.bind("<KeyPress-a>", acceleration)
-racine.bind("<KeyPress-r>", ralentissement)
-racine.bind("<Button-1>", demarrer_feu)
+TERRAIN.bind("<KeyPress-a>", acceleration)
+TERRAIN.bind("<KeyPress-r>", ralentissement)
+TERRAIN.bind("<Button-1>", clic)
 
 racine.mainloop()
