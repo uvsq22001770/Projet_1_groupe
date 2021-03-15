@@ -60,8 +60,19 @@ def clic(event):
 
     i = (int(event.x / 30))
     j = (int(event.y / 30))
-    print(chara[i][j])
+    print(coordonnes_cellules_proche(i, j)[0])
 
+def coordonnes_cellules_proche(i, j):
+    coordonnees = []
+    if i != 0:
+        coordonnees.extend([((i-1), j)])
+    if i != 39:
+        coordonnees.extend([((i+1), j)])
+    if j != 0:
+        coordonnees.extend([(i, (j-1))])
+    if j != 17:
+        coordonnees.extend([(i, (j+1))])
+    return coordonnees
 
 def couleur_aleatoire():
     """fonction donnant une couleur aléatoire lors de la création du terrain 
@@ -126,8 +137,10 @@ def effect_étape():
             #feu
             if "red" in chara[i][j]:
                 passer_etape("red") 
-                #fonction qui donne les voisins jaune de la case
-                #fonction qui remplace les cases jaunes
+                liste = coordonnes_cellules_proche(i, j)
+                for n in in range(0,len(liste):
+                    if "#ff9d00" in chara[liste[n][0]][liste[n][1]] :
+                        pass#fonction qui remplace les cases jaunes
 
             #foret
             elif "#056608" in (chara[i][j]):
@@ -186,14 +199,8 @@ STOP_SIMU.grid(column = 2,row = 1)
 #########################################
 # définition des évènements
 
-<<<<<<< HEAD
 TERRAIN.bind("<KeyPress-a>", acceleration)
 TERRAIN.bind("<KeyPress-r>", ralentissement)
 TERRAIN.bind("<Button-1>", clic)
-=======
-racine.bind("<KeyPress-a>", acceleration)
-racine.bind("<KeyPress-r>", ralentissement)
-racine.bind("<Button-1>", clic)
->>>>>>> c3f5773931b2c7e67543a9c6572a4bff86176a2b
 
 racine.mainloop()
