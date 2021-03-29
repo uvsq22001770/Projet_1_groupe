@@ -33,35 +33,25 @@ etape = 0
 # définition des fonctions
 # docstring pour chaque fonction
 
-
-def retourner_couleur(i,j):
-    """ fonction prenant comme argument les coordonnées d'un objet et renvoie sa couleur"""
-
-    if "#02079c" in (chara[i][j]):
-        return "blue"
-
-    elif "#ff9d00" in (chara[i][j]):
-        return "yellow"
-
-    elif "#056608" in (chara[i][j]):
-        return "green"  
-
-    elif "black" in (chara[i][j]):
-        return "black" 
-
-    elif "grey" in (chara[i][j]) :
-        return "grey"
-
-    elif "red" in (chara[i][j]):
-        return "red" 
-
 def clic(event):
     """Reprend les coordonnées de la parcelle sur laquelle on a cliqué en premier"""
+    if 0 >= event.x >= LARGEUR and 0 >= event.y >= HAUTEUR :
+        i = (int(event.x / 30))
+        j = (int(event.y / 30))
+        pass######################fonction qui remplace par une case rouge
+            ######################
 
-    i = (int(event.x / 30))
-    j = (int(event.y / 30))
-    print(chara[i][j])
-
+def coordonnes_cellules_proche(i, j):
+    coordonnees = []
+    if i != 0:
+        coordonnees.extend([((i-1), j)])
+    if i != 39:
+        coordonnees.extend([((i+1), j)])
+    if j != 0:
+        coordonnees.extend([(i, (j-1))])
+    if j != 17:
+        coordonnees.extend([(i, (j+1))])
+    return coordonnees
 
 def couleur_aleatoire():
     """fonction donnant une couleur aléatoire lors de la création du terrain 
@@ -78,7 +68,7 @@ def couleur_aleatoire():
     elif x == 2:
         couleur = "#056608" #vert
         return couleur
-
+ 
 
 def generer_terrain():
     """ fonction génerant le terrain du debut de jeu et faisant entrer chaque tuile dans la liste "tuiles", les coordonnées(i;j) des triangles sont definies par tuiles[i][j]"""
@@ -104,38 +94,69 @@ def char_terrain():
     pass
     
 
-def passer_etape(couleur):
+def passer_etape(i,j):
     """fonction qui réduit de 1 le temps dans la fonction chara"""
-    chara[i][j] = ((i,j), couleur, chara[i][j][2] - 1)
-    if chara[i][j][2] == 0 :
-        #fonction qui remplace la case
-        pass
-    
+    global chara
+    chara[i][j] = (chara[i][j][0], chara[i][j][1], chara[i][j][2] - 1)
+    return chara[i][j][2]
+
+def transformer_terrain(liste) :
+    for n in range(0, len(liste)) :
+        if liste[n][2] == "red":
+            pass######################fonction qui remplace par une case rouge
+                ######################
+        elif liste[n][2] == "black":
+            pass######################fonction qui remplace par une case noire
+                ######################
+        elif liste[n][2] == "grey":
+            pass######################fonction qui remplace par une case grise
+                ######################
+
+
+def proba_feu(x) :
+    y = rd.randint(1,10)
+    if x >= y :
+        return True
+
 
 def effect_étape():
     global etape 
+    changement = []
     etape += 1
+    
     for i in range(0,40):
         for j in range(0,18):
             
-            #cendres
-            if "grey" in chara[i][j]:
-                passer_etape("grey")
-
-
-            #feu
-            if "red" in chara[i][j]:
-                passer_etape("red") 
-                #fonction qui donne les voisins jaune de la case
-                #fonction qui remplace les cases jaunes
-
             #foret
-            elif "#056608" in (chara[i][j]):
-                #fonction qui compte le nombre de voisins en feu de la case verte
-                #fonction probabilité
-                #fonction qui change la couleur de la case
-                pass
-        
+            if "#056608" in chara[i][j] :
+                liste = coordonnes_cellules_proche(i, j)
+                voisin_feu = 0
+                for n in range(0, len(liste)) :
+                    if "red" in chara[liste[n][0]][liste[n][1]] :
+                        voisin_feu += 1
+                if proba_feu(voisin_feu) == True:
+                    changement.append([i,j,"red"])
+                    
+            #feu
+            elif "red" in chara[i][j]:
+                if passer_etape(i, j) == 0 :
+                    changement.append([i,j,"grey"])
+                
+                liste = coordonnes_cellules_proche(i, j)
+                for n in range(0, len(liste)) :
+                    if "#ff9d00" in chara[liste[n][0]][liste[n][1]] :
+                        changement.append([liste[n][0],liste[n][1],"red"])
+            
+            
+            
+            #cendres
+            elif "grey" in chara[i][j]:
+                if passer_etape(i, j) == 0:
+                    changement.append([i,j,"black"])      
+    transformer_terrain(changement)
+
+
+                    
 def demar_simulation():
     pass
     
@@ -159,14 +180,6 @@ TERRAIN = tk.Canvas(racine, bg="white", height=HAUTEUR, width=LARGEUR)
 #########################################
 # définition des widgets
 
-#canvas_eau=tk.Canvas(racine, bg="blue", height=100, width=100)
-#canvas_foret=tk.Canvas(racine, bg="green", height=100, width=100)
-#canvas_cendres=tk.Canvas(racine, bg="black", height=100, width=100)
-#canvas_feu=tk.Canvas(racine, bg="red", height=100, width=100)
-#canvas_prairie=tk.Canvas(racine, bg="yellow", height=100, width=100)
-#canvas_cendrestiedes=tk.Canvas(racine, bg="grey", height=100, width=100)
-
-
 GENERER_TERRAIN=tk.Button(racine,text="génerer terrain",font=("helvetica"),command=generer_terrain)
 SAUV_TERRAIN=tk.Button(racine,text="sauvegarder terrain",font=("helvetica"),command=sauver_terrain)
 CHAR_TERRAIN=tk.Button(racine,text="charger un terrain",font=("helvetica"),command=char_terrain)
@@ -186,14 +199,8 @@ STOP_SIMU.grid(column = 2,row = 1)
 #########################################
 # définition des évènements
 
-<<<<<<< HEAD
-TERRAIN.bind("<KeyPress-a>", acceleration)
-TERRAIN.bind("<KeyPress-r>", ralentissement)
-TERRAIN.bind("<Button-1>", clic)
-=======
 racine.bind("<KeyPress-a>", acceleration)
 racine.bind("<KeyPress-r>", ralentissement)
-racine.bind("<Button-1>", clic)
->>>>>>> c3f5773931b2c7e67543a9c6572a4bff86176a2b
+TERRAIN.bind("<Button-1>", clic)
 
 racine.mainloop()
